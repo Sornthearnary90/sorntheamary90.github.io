@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phnome Penh Hotel&Travel</title>
+    <!-- Use Inter font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f9fc;
+        }
+        /* Adjusted background for better preview compatibility */
+        .hero-bg {
+            background-image: url('https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2a/a0/c8/06/caption.jpg?w=1200&h=-1&s=1');
+            background-size: cover;
+            background-position: center;
+        }
+        .shop-hero-bg {
+            background-image: url('https://assets.hyatt.com/content/dam/hyatt/hyattdam/images/2020/11/06/0230/Hyatt-Regency-Phnom-Penh-P007-King-Palace-View-Deluxe.jpg/Hyatt-Regency-Phnom-Penh-P007-King-Palace-View-Deluxe.16x9.jpg?imwidth=1920');
+            background-size: cover;
+            background-position: center;
+        }
+        .message-box {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        .message-box.show {
+            opacity: 1;
+            visibility: visible;
+        }
+    </style>
+</head>
+<body class="bg-[#f7f9fc]">
+
+    <!-- Main Content Container -->
+    <div class="mx-auto max-w-7xl px-4 py-8 md:px-6 lg:px-8">
+
+        <!-- Header/Navigation Section -->
+        <header class="flex items-center justify-between py-6">
+            <div class="text-2xl font-bold text-gray-800">Cambodia Hotels</div>
+            <nav class="hidden space-x-8 md:flex">
+                <a href="#" id="home-link" class="text-gray-600 hover:text-gray-900 transition-colors">Home</a>
+                <a href="#" id="shop-link" class="text-gray-600 hover:text-gray-900 transition-colors">Shop</a>
+                <a href="#" id="contact-link" class="text-gray-600 hover:text-gray-900 transition-colors">Contact Us</a>
+                <a href="#" id="view-messages-link" class="text-gray-600 hover:text-gray-900 transition-colors">View Messages</a>
+            </nav>
+            <!-- Mobile menu button -->
+            <button class="md:hidden">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </header>
+
+        <!-- -------------------- Home Page Section -------------------- -->
+        <div id="home-page" class="transition-opacity duration-500">
+            <!-- Hero section with background image and text -->
+            <div class="hero-bg relative w-full overflow-hidden rounded-3xl p-6 md:p-12 lg:p-16">
+                <!-- Overlay gradient for readability -->
+                <div class="absolute inset-0 z-0 rounded-3xl bg-gradient-to-t from-gray-900/60 to-transparent"></div>
+                
+                <div class="relative z-10 flex flex-col justify-end p-4 md:p-8 lg:p-12">
+                    <!-- Hero Text -->
+                    <h1 class="text-3xl font-bold leading-tight text-white md:text-5xl lg:text-6xl">Enjoy your Dream <br class="hidden md:inline">Vacation</h1>
+                    <p class="mt-2 max-w-sm text-sm font-medium text-gray-200 md:mt-4 md:max-w-md md:text-lg">Book Hotels, Flights and Stay packages at lowest price</p>
+
+                    <!-- Search/Booking Card -->
+                    <form id="search-form" class="mt-8 rounded-2xl bg-white/30 p-4 backdrop-blur-md md:mt-12 md:p-6 lg:mt-24">
+                        <div class="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
+                            <div>
+                                <label class="block text-xs font-semibold uppercase text-gray-500 md:text-sm">Location</label>
+                                <input type="text" id="location-input" placeholder="Where are you going?" class="mt-1 w-full border-b border-gray-300 bg-transparent px-0 py-2 text-sm font-medium text-gray-700 placeholder:text-gray-400 focus:border-gray-500 focus:outline-none md:text-base">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold uppercase text-gray-500 md:text-sm">Check in</label>
+                                <input type="text" id="checkin-input" placeholder="Add dates" class="mt-1 w-full border-b border-gray-300 bg-transparent px-0 py-2 text-sm font-medium text-gray-700 placeholder:text-gray-400 focus:border-gray-500 focus:outline-none md:text-base">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold uppercase text-gray-500 md:text-sm">Check out</label>
+                                <input type="text" id="checkout-input" placeholder="Add dates" class="mt-1 w-full border-b border-gray-300 bg-transparent px-0 py-2 text-sm font-medium text-gray-700 placeholder:text-gray-400 focus:border-gray-500 focus:outline-none md:text-base">
+                            </div>
+                            <div class="flex items-end">
+                                <div class="flex-grow">
+                                    <label class="block text-xs font-semibold uppercase text-gray-500 md:text-sm">Guests</label>
+                                    <input type="text" id="guests-input" placeholder="Add guests" class="mt-1 w-full border-b border-gray-300 bg-transparent px-0 py-2 text-sm font-medium text-gray-700 placeholder:text-gray-400 focus:border-gray-500 focus:outline-none md:text-base">
+                                </div>
+                                <button type="submit" class="ml-4 flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#2a354f] text-white transition-colors hover:bg-[#1a2333] md:h-12 md:w-12 md:rounded-xl">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 md:h-6 md:w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Popular Hotels Section -->
+            <div class="mt-12 md:mt-20">
+                <h2 class="text-2xl font-semibold text-gray-800 md:text-3xl">Popular Hotels</h2>
+                <div id="hotel-list" class="mt-6 grid gap-6 sm:grid-cols-2 md:mt-8 md:grid-cols-3 lg:gap-8">
+                    <!-- Hotel cards will be generated here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- -------------------- Shop Page Section -------------------- -->
+        <div id="shop-page" class="hidden transition-opacity duration-500">
+            <!-- Shop Hero Section -->
+            <div class="shop-hero-bg relative w-full overflow-hidden rounded-3xl p-6 md:p-12 lg:p-16">
+                <!-- Overlay -->
+                <div class="absolute inset-0 z-0 rounded-3xl bg-black/50"></div>
+                <div class="relative z-10 flex flex-col items-center justify-center text-center text-white">
+                    <h1 class="text-3xl font-bold md:text-5xl lg:text-6xl">Rooms & Suites</h1>
+                    <p class="mt-2 text-lg">Browse our selection of luxury accommodations</p>
+                </div>
+            </div>
+
+            <!-- Rooms Gallery Section -->
+            <div class="mt-12 md:mt-20">
+                <h2 class="text-2xl font-semibold text-gray-800 md:text-3xl">Luxury Rooms & Suites</h2>
+                <div id="room-list" class="mt-6 grid gap-6 sm:grid-cols-2 md:mt-8 md:grid-cols-3 lg:gap-8">
+                    <!-- Room cards will be generated here -->
+                </div>
+                <button id="back-from-shop" class="mt-12 px-6 py-3 rounded-full text-white bg-gray-600 hover:bg-gray-700 transition-colors">Back to Home</button>
+            </div>
+        </div>
+        
+        <!-- -------------------- Contact Us Page Section -------------------- -->
+        <div id="contact-page" class="hidden transition-opacity duration-500">
+            <div class="bg-white rounded-3xl shadow-xl p-8 md:p-12 lg:p-16">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4 md:text-4xl">Contact Us</h2>
+                <p class="text-gray-600 mb-8 max-w-lg">We would love to hear from you. Please fill out the form below and we will get back to you as soon as possible.</p>
+                
+                <form id="contact-form" class="space-y-6">
+                    <div>
+                        <label for="fullname" class="block text-sm font-medium text-gray-700">Full Name</label>
+                        <input type="text" id="fullname" name="fullname" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" placeholder="Your full name">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
+                        <input type="email" id="email" name="email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" placeholder="you@example.com">
+                    </div>
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-gray-700">Message</label>
+                        <textarea id="message" name="message" rows="4" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:text-sm" placeholder="Write your message here..."></textarea>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <button type="submit" class="inline-flex justify-center rounded-md border border-transparent bg-blue-600 py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                            Send Message
+                        </button>
+                        <button id="back-from-contact" type="button" class="inline-flex justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                            Back to Home
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- -------------------- Search Results Page Section -------------------- -->
+        <div id="search-results-page" class="hidden transition-opacity duration-500">
+            <h2 class="text-2xl font-semibold text-gray-800 md:text-3xl"> Results Booking</h2>
+            <div id="search-details" class="mt-6 rounded-2xl bg-white p-6 shadow-md">
+                <!-- Search data will be displayed here -->
+            </div>
+            <button id="back-from-search" class="mt-6 px-6 py-3 rounded-full text-white bg-gray-600 hover:bg-gray-700 transition-colors">Back to Home</button>
+
+            <div class="mt-12 md:mt-20">
+                <h2 class="text-2xl font-semibold text-gray-800 md:text-3xl"> History for guest Booking</h2>
+                <div id="search-history" class="mt-6 grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+                    <!-- Entered data will be displayed here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- -------------------- Hotel Details Page Section -------------------- -->
+        <div id="hotel-details-page" class="hidden transition-opacity duration-500">
+            <div id="hotel-details-content">
+                <!-- Hotel details will be displayed here -->
+            </div>
+            <button id="back-from-details" class="mt-6 px-6 py-3 rounded-full text-white bg-gray-600 hover:bg-gray-700 transition-colors">Back to Home</button>
+        </div>
+        
+        <!-- -------------------- Messages Page Section -------------------- -->
+        <div id="messages-page" class="hidden transition-opacity duration-500">
+            <h2 class="text-2xl font-semibold text-gray-800 md:text-3xl">Messages from Guests</h2>
+            <div id="message-list" class="mt-6 space-y-4">
+                <!-- Messages will be rendered here -->
+            </div>
+            <button id="back-from-messages" class="mt-6 px-6 py-3 rounded-full text-white bg-gray-600 hover:bg-gray-700 transition-colors">Back to Home</button>
+        </div>
+
+    </div>
+
+    <!-- Message box for success messages -->
+    <div id="message-box" class="message-box"></div>
+
+    <script>
+        // Variables to reference different pages
+        const homePage = document.getElementById('home-page');
+        const shopPage = document.getElementById('shop-page');
+        const contactPage = document.getElementById('contact-page');
+        const searchResultsPage = document.getElementById('search-results-page');
+        const hotelDetailsPage = document.getElementById('hotel-details-page');
+        const messagesPage = document.getElementById('messages-page');
+        
+        const searchForm = document.getElementById('search-form');
+        const contactForm = document.getElementById('contact-form');
+        
+        const backFromSearchBtn = document.getElementById('back-from-search');
+        const backFromDetailsBtn = document.getElementById('back-from-details');
+        const backFromShopBtn = document.getElementById('back-from-shop');
+        const backFromContactBtn = document.getElementById('back-from-contact');
+        const backFromMessagesBtn = document.getElementById('back-from-messages');
+        
+        const searchHistoryContainer = document.getElementById('search-history');
+        const searchDetailsContainer = document.getElementById('search-details');
+        const hotelListContainer = document.getElementById('hotel-list');
+        const roomListContainer = document.getElementById('room-list');
+        const hotelDetailsContent = document.getElementById('hotel-details-content');
+        const messageListContainer = document.getElementById('message-list');
+        
+        // New variables for navigation links
+        const homeLink = document.getElementById('home-link');
+        const shopLink = document.getElementById('shop-link');
+        const contactLink = document.getElementById('contact-link');
+        const viewMessagesLink = document.getElementById('view-messages-link');
+
+        // Variables to store data
+        let searchHistory = [];
+        let messages = [];
+
+        // Hotel data with new, beautiful images
+        const hotels = [
+            {
+                name: 'Hyatt Regency Phnom Penh',
+                location: '55 Street 178, Phnom Penh 12206',
+                price: 'KHR 669.581',
+                image: 'https://cf.bstatic.com/xdata/images/hotel/max1024x768/282322805.jpg?k=bec89a1a22cadc7a8f039c4a3d5b26089b73e300b2ea5a9486e5a33e39679f2f&o=',
+                description: ' five-star luxury hotel in Phnom Penh, conveniently located in the heart of the capital.',
+                images: [
+                    'https://lh3.googleusercontent.com/p/AF1QipPpzPksKgPOhkLfxUMzSbqqik3aJ4ekFRATQDMN=w252-h167-k-no', // Hotel Exterior
+                    'https://lh3.googleusercontent.com/p/AF1QipMJ8Nie09eG2kH6keALTnTM7__QVvhR2LxH103s=w252-h167-k-no', // Hotel Lobby
+                    'https://lh3.googleusercontent.com/gvs/AKFkxhu32l9N1JTiz8X6yBYsHE9RDBE_m3K_6hWzhHM-uaviltvkzFpOfJ32YnQpdk2QlLWCK1_Acrl29C4R2jgcu_Tl8CMyqeLlkp5o', // Hotel Pool
+                    'https://lh3.googleusercontent.com/gvs-cs/ABe5-6WJxMaSq0hJ3Lge42nsf5ACobofqTvgopm_GY730HXKTRiTcAONIDayVOUrk_WF41OviVm2XmfJOLBExJ8I8GYe0LRR-ocvoMRqmAJ7yDdThe3ExnfvtlZPdko10v2IHoYi7Ijl', // Hotel Room
+                    'https://lh3.googleusercontent.com/gvs/AKFkxhsNdAFVkd8Q7bHN_kKyi09Zq34hntnV4BvIFEO674N8nmnsmaz63tWBlnOwB6Xg6Ew_6plJE6WefJ_9UiOYHV3uDC2JkmuGR7NE', // Hotel Restaurant
+                    'https://lh3.googleusercontent.com/p/AF1QipMVSPedeR0DE6Li7sMp5npdFeSNELSo42mJw6Al=w252-h168-k-no' // Hotel View
+                ]
+            },
+            {
+                name: 'Rosewood Phnom Penh',
+                location: 'Vattanac Capital Tower, Monivong Boulevard, 66, 12021',
+                price: 'KHR 1,493.953',
+                image: 'https://www.hotelsinheaven.com/wp-content/uploads/2019/03/rosewood-phnom-penh-cambodia-facade-hotel.jpg',
+                description: 'An ultra-luxury experience at the heart of the Cambodian capital. Soaring 188 meters above the heart of Phnom Penh.',
+                images: [
+                    'https://lh3.googleusercontent.com/gps-cs-s/AC9h4nraAirS1KfHIUwvAWCmaOm5JPmBBvCgVpAUKBYFbqtVbp8WwyQgplGV0Uh0j9li0waBGsJZCEjqVVRqxZ0ag7_OkX70CYpkzSAjn9RA63YnRBllIZmnhFuy2sVu1p5EMqBOAmz6pQ=w252-h518-k-no', // Hotel Exterior
+                    'https://lh3.googleusercontent.com/gvs-cs/ABe5-6XvXNG0Qd9GT7CA9Ow0Zz46P4opeG5hlTuHrypLaE1XPOx1MtfjirLhZzevbX02mXe3mffXcEftsz7fRV7UwmthAvwTBPq1-oGcyHwXzafQfjHBR1CSilsV2Jf-KoKL1DY52LKtqw', // Hotel Lobby
+                    'https://lh3.googleusercontent.com/p/AF1QipM3nRdNJq4R-P-onbuF2VBcWxHwib9FqlaASUwf=w252-h171-k-no', // Hotel Pool
+                    'https://lh3.googleusercontent.com/p/AF1QipP77DWjvhOUf9G02FgCcGgbk-Tt3dInzCx8mR5V=w252-h168-k-no', // Hotel Room
+                    'https://images.trvl-media.com/lodging/18000000/17180000/17171500/17171429/96bcf14c_z.jpg', // Hotel Restaurant
+                    'https://lh3.googleusercontent.com/gvs-cs/ABe5-6WklPgv7qAJkefT8Dd-BKlrM5fR1HnkFuv4fNcoUYElBhphetL7Nn7nnLG17yCSocHi9gZMdUWOFz1aBfcIRiIUoVUFvOSde7YnlLJFnb7qFXjuPE1iGnw7bnVOSXNxb-fIkMg' // Hotel View
+                ]
+            },
+            {
+                name: 'Amansara',
+                location: 'Krong Siem Reap 93101',
+                price: 'KHR 7,687.810',
+                image: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/12/19/26/3b/amansara.jpg?w=900&h=500&s=1',
+                description: 'Book Amansara Resort, Cambodia — Enjoy Modern Elegance with Privileged Access to Angkor Wat and Nearby Floating Villages. ',
+                images: [
+                    'https://lh6.googleusercontent.com/proxy/tO81Il7PO-1WnZg-MamiTz53EOXP005ohr4mBhMNqJyAFFf4-BjStSxH23fArFczAkvUkdh_2NubYxjx323jAXKNK9aE54DOfsDabEZFnr5sgy88frkmU1XBRRhg8ta-XL4cpFLDzN8x1kI8qLczoUeCiMKGvA=w252-h155-k-no', // Hotel Exterior
+                    'https://lh4.googleusercontent.com/proxy/dBcJv5l-wvSbDX2qYuFokbFgDz_5WVzE3l0pxppPUBVP6aDkO5t8dfOUB-pGjM6_QA05U6cBnEWv7Y_DJwSbHDYjWgtD5Oj6bYMwSfnzFEYYB6xpMY91wYmmZZvLD8Tsz_FKx-GPUHy3pDFvMmHS5ZJcWOWgtPw=w252-h168-k-no', // Hotel Lobby
+                    'https://lh3.googleusercontent.com/gps-cs-s/AC9h4noDR3hX5kV5q9BVrA9YOdMBPylgEPu3RDjD71OclC2USDsAUS_rDKwnDWpkdrbhdL9L5212t6IbX_2VxQwdlZwisL6Kr538w7yxldkQdqcOlBb4qYQE7lO4Kiu2lEI1qoaUzizVQA=w252-h189-k-no', // Hotel Pool
+                    'https://lh3.googleusercontent.com/gps-cs-s/AC9h4npqadxaukTL2da9aw8sSLVGj-noBGh93nriplwUrTCE37Uq2kL8pmIwGGXXYeBBaOWTbZWYlaJl4esMR1M3rNVJemnuVIHQms6eT2XW0h-DrVgw00RtFkGB6Pb2Y-uwKEDB0NjhuA=w252-h189-k-no', // Hotel Room
+                    'https://lh3.googleusercontent.com/gvs-cs/ABe5-6UlwpZlEUozjrFskCFkCri4KcjXCxcATlIbHn_NkSHwYZXK8CDqBXtdd7tAnXDEoemSNfNK4mOqFYoG5dxtjvVptZnQ71lNzsnZ98CsQ2lx5LuoH2lVxZfjsadBvyP-Kkq0H90', // Hotel Restaurant
+                    'https://lh3.googleusercontent.com/gps-cs-s/AC9h4npc92uBOgwzMosmKrFxhMPLGCHvGCY77N4L4fmZj63Bnx_MxM7wAXsw5zU9GRR9xkdzxBRaAOfo9XIlbO4003v1forkBY-9Eh0lMwnxIrvCOLlZsL9pjuJjJ89pFjp1xb7wpT85STspTbM=w252-h336-k-no', // Hotel View
+                ]
+            },
+            {
+                name: 'SUN & MOON, Riverside Hotel',
+                location: 'aterfront, Norodom Blvd. (Near Phreak Monivong Bridge), Village 10 Sangkat Tonle Bassac, 12204, Phnom Penh',
+                price: 'KHR 287.289',
+                image: 'https://dynamic-media-cdn.tripadvisor.com/media/photo-o/29/23/a4/56/khjol-lounge-bar-cafe.jpg?w=700&h=-1&s=1',
+                description: 'SUN & MOON, Riverside Hotel is a unique designed lifestyle ecosystem that integrates sophisticated.',
+                images: [
+                    'https://lh6.googleusercontent.com/proxy/5yDLg5IlDSypoSDt68ivte8Rdp4OEwRNg-wSopJN9wdT-JCOfdSOJZVTcUB2Q8i4Mrf9EP8DAhsNRqblCwf9KOKhw4aKIY_wgFRZVR3_ti5E6oAv3IkLZBBTI68AkFY3sDJb26pRHuIk3ZbpICxSqlr2NQCf1g=w252-h168-k-no', // Hotel Exterior
+                    'https://lh4.googleusercontent.com/proxy/6T4oI0oMxAdWp6b_bcCIvyvC2oEItgdvm4pDFmkJ_kCs50cEvso3LWQRDvE4QbZscWCimfA06MQprkKHhaS9ynP3nihdtvPnJhdYEHbYl-hnyk-4lW2nk9fzM0uixmnHAUpszXkAp3S0zncoE25610gAp8icYZU=w252-h168-k-no', // Hotel Lobby
+                    'https://lh3.googleusercontent.com/p/AF1QipPK2WzVG5d8N7E5VBnZbDvVWiNdXMJqGO7RE80O=w252-h168-k-no', // Hotel Pool
+                    'https://lh6.googleusercontent.com/proxy/fhQ4P4uqaXcvU0KTOpjAUkVYeIipQ8OlwT3jdIenG160omfT2TLvewZQKMzc3ljjDHrPx-XpO-SDzkQRJRWgS62tfP-daRev6df02q4W102rQsZGZPsjBIq3PJ0f-2r0tegkycbGuLfNiavCUzgszXBpUcbqIw=w252-h143-k-no', // Hotel Room
+                    'https://lh5.googleusercontent.com/proxy/rZaHqeRmemVknyADr101VF8chpIpxOMTjTz8LMpvXR0nnLKL3E1_dHVMUEZz0Kqo9zUSsXDxgnepWtX-uj48rKsJbezMpvizui3LoibVL7ciCfJZ4SoFVew7ZcXPIkMxYU9xjl9Z6bPix9kgW_k3LnCjc6j9VUA=w253-h168-k-no', // Hotel Restaurant
+                    'https://lh3.googleusercontent.com/p/AF1QipOPa-dk_YWytXW01x9XbKdtDzqb-PkUS6WSQLcx=w253-h142-k-no' // Hotel View
+                ]
+            },
+            {
+                name: 'Six Senses Krabey Island',
+                location: 'Koh Krabey Island, Ream Commune, 18000',
+                price: 'KHR 3,496,585',
+                image: 'https://lh3.googleusercontent.com/p/AF1QipPDBfQQDanb9I-wdTuzp9s0aeQcJ_setKiE29ZL=w253-h168-k-no',
+                description: 'Six Senses Krabey Island features fisherman’s house-style accommodation with a private beach area.',
+                images: [
+                    'https://lh3.googleusercontent.com/p/AF1QipNcwq5iqH506xIDOT8LreelLo_LTPlTUrNk9gAt=w252-h168-k-no', // Hotel Exterior
+                    'https://lh3.googleusercontent.com/gvs-cs/ABe5-6WIzqI9edFFdCO8bz114EV5rCrYWLCSnPhOr2AOkvQnmIvzU4zSvfnMbOLJ0hp0Hrh3ub_r5qnyZG6rQ1v-VjhbHVWv16tW89tclWUTtw2pjMMDgku9MMRmxKfI1rW_MOkfdQcBXw', // Hotel Lobby
+                    'https://lh3.googleusercontent.com/p/AF1QipMMaxv-JRG6g1zjHlQhkz7KV-yu3noG3HimLVET=w252-h167-k-no', // Hotel Pool
+                    'https://lh3.googleusercontent.com/p/AF1QipPAUr6P4yD9ehiffZDnB6yOX60rApzcgw1wBqyf=w252-h168-k-no', // Hotel Room
+                    'https://lh3.googleusercontent.com/p/AF1QipNoXuARer-mDeVTRdpAvn3e-STNXhJRe_uF2uce=w252-h168-k-no', // Hotel Restaurant
+                    'https://lh3.googleusercontent.com/p/AF1QipP8KRlxoQVzqFYANL-myee4AMzEIet5d_GnGUS5=w253-h168-k-no' // Hotel View
+                ]
+            },
+            {
+                name: 'Raffles Hotel Le Royal',
+                location: '92 Rukhak Vithei, Phnom Penh 12302',
+                price: 'KHR 1,251.658',
+                image: 'https://lh3.googleusercontent.com/p/AF1QipOJ0dNJHPNI_SIbWa_SPkJHie1YGL_yRq3iHFzC=w252-h168-k-no',
+                description: 'Raffles Hotel Le Royal has, for nearly a century, been the premier hotel in Phnom Penh.',
+                images: [
+                    'https://lh5.googleusercontent.com/proxy/wjI2ViDyXq4RJ02YRs1xj4K8R67LRhLF6I1394taZ8vRJKl8sbKe_yoR-FoCKe3jPYMI8slWUHnWD040YSKkfHEQWLEni9DNTdvVo577-y-Uo1rfK80BBKPxnVBCjox0Yc4hnmDKvJaO7SmRBXbnjy2COR4cOMs=w252-h189-k-no', // Hotel Exterior
+                    'https://cdn.ostrovok.ru/t/1024x768/mec/46/0c/460c6514bbcf16a75f3bf85ea0f8e0888295060d.jpeg', // Hotel Lobby
+                    'https://cdn.ostrovok.ru/t/1024x768/mec/f7/aa/f7aaa4d502955f7920ef345d40cac87b5542bea7.jpeg', // Hotel Pool
+                    'https://lh3.googleusercontent.com/gps-cs-s/AC9h4noz2jjonbSRm8d9MafTYpOcn2tGBx_vFHwEE192rEqAAR0DQmUB4tcvDuISYk_72NXL_JlHm3rS2pOef03Tsaa_FIyLD8htuNoIq_2iDh0WNtOF38jD4N94tcjeiZdzclN6gvtG=w252-h336-k-no', // Hotel Room
+                    'https://lh4.googleusercontent.com/proxy/Kj6USppmJI8Am4DrYF4Qg3ig5_4EZMEPL3WMMrOSN3HmcUtE4poRX_Yk9xsD0Rfj0G2JK77gPNZyrnSiEH_Li1szqetZrpi-P9Nf33zWnc1fgqq93p0cEsKmEczS8RU4y4JaD01guR-geDakFuL_38X00yRgc2g=w252-h189-k-no', // Hotel Restaurant
+                    'https://lh3.googleusercontent.com/gps-cs-s/AC9h4noOmNCwHK4LDkKMmRIJtZG13OKfGY2hpKI5iZdG9TveLwIzUIDOffm0a9tKruLZyluEmkhcg2nVg2jnhHfB5W1Hlwuz9RpUcsvdKTRTVPg_lbdFItJM7zHz2o-nxJaWiUmvqngz=w253-h189-k-no' // Hotel View
+                ]
+            }
+        ];
+
+        // Data for rooms and suites with new, beautiful images
+        const rooms = [
+            {
+                name: 'Luxury Room',
+                price: '$ 150',
+                rating: '4.9',
+                beds: '1 Bed',
+                bath: '1 Bath',
+                sqft: '500 sqft',
+                image: 'https://lh6.googleusercontent.com/proxy/enATRTVf7flM1eaJ2xqriA71LLk4j4uJI0edWMdh9Os_GDzhnA3oFwdhocx866P5BxG97xSbkfSDD1LL25pMzKTHsjRDlAHCZXelpt76mYYtHSrZdL0GomirXa9L9K3xmZ1Kng7QoOgn-0_s85Zu90KYcax9RA=w252-h155-k-no'
+            },
+            {
+                name: 'Deluxe Rooms',
+                price: '$ 250',
+                rating: '5.0',
+                beds: '2 Bed',
+                bath: '2 Bath',
+                sqft: '600 sqft',
+                image: 'https://lh3.googleusercontent.com/p/AF1QipM3nRdNJq4R-P-onbuF2VBcWxHwib9FqlaASUwf=w252-h171-k-no'
+            },
+            {
+                name: 'The Pearl Suite',
+                price: '$ 450',
+                rating: '4.9',
+                beds: '2 Bed',
+                bath: '2 Bath',
+                sqft: '750 sqft',
+                image: 'https://lh3.googleusercontent.com/p/AF1QipNcwq5iqH506xIDOT8LreelLo_LTPlTUrNk9gAt=w252-h168-k-no'
+            },
+            {
+                name: 'Golden Horizon Suite',
+                price: '$ 550',
+                rating: '4.9',
+                beds: '2 Bed',
+                bath: '2 Bath',
+                sqft: '800 sqft',
+                image: 'https://lh3.googleusercontent.com/p/AF1QipPgARSoPNpMLXP3PWjw7n-_bze7M6D49NOOhErU=w252-h168-k-no'
+            },
+            {
+                name: 'The Haven Room',
+                price: '$ 300',
+                rating: '5.0',
+                beds: '1 Bed',
+                bath: '1 Bath',
+                sqft: '750 sqft',
+                image: 'https://lh3.googleusercontent.com/p/AF1QipMJ8Nie09eG2kH6keALTnTM7__QVvhR2LxH103s=w252-h167-k-no'
+            },
+            {
+                name: 'The Executive Deluxe',
+                price: '$ 450',
+                rating: '5.0',
+                beds: '2 Bed',
+                bath: '2 Bath',
+                sqft: '900 sqft',
+                image: 'https://lh3.googleusercontent.com/p/AF1QipPK2WzVG5d8N7E5VBnZbDvVWiNdXMJqGO7RE80O=w252-h168-k-no'
+            },
+            {
+                name: 'The Prestige Room',
+                price: '$ 550',
+                rating: '5.0',
+                beds: '1 Bed',
+                bath: '1 Bath',
+                sqft: '1200 sqft',
+                image: 'https://lh3.googleusercontent.com/proxy/psOkr6vJ43RFyF1TGznk9sq3rwC54DgtrVpVZ13F8XSwsXodtIU1JDouhb5888AmwKdbiMJtRqCGlDsI3NJPxwL9y85HqDC-9pkJt08EegY_eqUTrz9wLwC3J5QTFwKgZyoWVN5Q53oAnimsevCajzfse8pFyQ=w252-h209-k-no'
+            },
+            {
+                name: 'Royal Suite',
+                price: '$ 600',
+                rating: '5.0',
+                beds: '2 Bed',
+                bath: '2 Bath',
+                sqft: '825 sqft',
+                image: 'https://lh3.googleusercontent.com/gps-cs-s/AC9h4npyDN1p-zGyQvwobnE0gktsXy1C8dwgQ8WsmaR9qiMXMIyY4HTgQ1HPEVdV9SbwDo1pT5jitsEiv1YcNz3Pxw9VqJBvLSeg0YVH4v8lm1pVJMAwk1hCln_ba3AOML1CuM-plG5qIA=w252-h168-k-no'
+            },
+            {
+                name: 'Family Suites',
+                price: '$ 750',
+                rating: '5.0',
+                beds: '5 Bed',
+                bath: '5 Bath',
+                sqft: '950 sqft',
+                image: 'https://lh3.googleusercontent.com/p/AF1QipMNkfNl6oLDHxrIZ7iXdvdOYAed-J8MPuaQs2xS=w252-h169-k-no'
+            }
+        ];
+
+        // Function to show a message
+        function showMessage(message) {
+            const msgBox = document.getElementById('message-box');
+            msgBox.textContent = message;
+            msgBox.classList.add('show');
+            setTimeout(() => {
+                msgBox.classList.remove('show');
+            }, 3000);
+        }
+
+        // Function to show a page
+        function showPage(pageId) {
+            homePage.classList.add('hidden');
+            shopPage.classList.add('hidden');
+            contactPage.classList.add('hidden');
+            searchResultsPage.classList.add('hidden');
+            hotelDetailsPage.classList.add('hidden');
+            messagesPage.classList.add('hidden');
+            document.getElementById(pageId).classList.remove('hidden');
+        }
+
+        // Function to render search history
+        function renderSearchHistory() {
+            searchHistoryContainer.innerHTML = ''; // Clear old content
+            searchHistory.forEach((item, index) => {
+                const historyCard = document.createElement('div');
+                historyCard.className = 'rounded-2xl bg-white p-6 shadow-md';
+                historyCard.innerHTML = `
+                    <h4 class="text-lg font-semibold text-gray-800">Recent Search</h4>
+                    <p class="mt-2 text-sm text-gray-600"><span class="font-medium text-gray-800">Location:</span> <span class="data-location">${item.location || 'Not Entered'}</span></p>
+                    <p class="mt-1 text-sm text-gray-600"><span class="font-medium text-gray-800">Check In:</span> <span class="data-checkin">${item.checkin || 'Not Entered'}</span></p>
+                    <p class="mt-1 text-sm text-gray-600"><span class="font-medium text-gray-800">Check Out:</span> <span class="data-checkout">${item.checkout || 'Not Entered'}</span></p>
+                    <p class="mt-1 text-sm text-gray-600"><span class="font-medium text-gray-800">Guests:</span> <span class="data-guests">${item.guests || 'Not Entered'}</span></p>
+                    <div class="mt-4 flex space-x-2">
+                        <button onclick="editSearch(${index})" class="edit-btn px-4 py-2 text-sm rounded-full text-white bg-blue-500 hover:bg-blue-600 transition-colors">Edit</button>
+                        <button onclick="deleteSearch(${index})" class="delete-btn px-4 py-2 text-sm rounded-full text-white bg-red-500 hover:bg-red-600 transition-colors">Delete</button>
+                    </div>
+                `;
+                searchHistoryContainer.prepend(historyCard);
+            });
+        }
+        
+        // Function to edit a search
+        function editSearch(index) {
+            const item = searchHistory[index];
+            document.getElementById('location-input').value = item.location;
+            document.getElementById('checkin-input').value = item.checkin;
+            document.getElementById('checkout-input').value = item.checkout;
+            document.getElementById('guests-input').value = item.guests;
+            searchHistory.splice(index, 1); // Remove old entry
+            renderSearchHistory();
+            showPage('home-page'); // Return to home page for editing
+            showMessage('Data has been transferred to the form for editing!');
+        }
+
+        // Function to delete a search
+        function deleteSearch(index) {
+            searchHistory.splice(index, 1);
+            renderSearchHistory();
+            showMessage('Search successfully deleted!');
+        }
+        
+        // Function to show search results on the new page
+        function showSearchResults(data) {
+            searchDetailsContainer.innerHTML = `
+                <h4 class="text-lg font-semibold text-gray-800">Search Details</h4>
+                <p class="mt-2 text-sm text-gray-600"><span class="font-medium text-gray-800">Location:</span> ${data.location || 'Not Entered'}</p>
+                <p class="mt-1 text-sm text-gray-600"><span class="font-medium text-gray-800">Check In:</span> ${data.checkin || 'Not Entered'}</p>
+                <p class="mt-1 text-sm text-gray-600"><span class="font-medium text-gray-800">Check Out:</span> ${data.checkout || 'Not Entered'}</p>
+                <p class="mt-1 text-sm text-gray-600"><span class="font-medium text-gray-800">Guests:</span> ${data.guests || 'Not Entered'}</span></p>
+            `;
+            showPage('search-results-page'); // Show results page
+        }
+
+        // Function to show hotel details
+        function showHotelDetails(hotel) {
+            hotelDetailsContent.innerHTML = `
+                <div class="rounded-3xl overflow-hidden shadow-xl bg-white mb-8">
+                    <img src="${hotel.image}" alt="${hotel.name}" class="w-full h-80 object-cover">
+                    <div class="p-6 md:p-8">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-2">${hotel.name}</h2>
+                        <p class="text-lg text-gray-600 mb-4">${hotel.location}</p>
+                        <p class="text-2xl font-bold text-gray-800 mb-4">Price from: <span class="text-blue-600">AED ${hotel.price}</span></p>
+                        <p class="text-gray-700 leading-relaxed">${hotel.description}</p>
+                        
+                        <!-- Image gallery section -->
+                        <div class="mt-8">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-4">Image Gallery</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                                ${hotel.images.slice(0, 3).map(imgSrc => `
+                                    <img src="${imgSrc}" alt="Hotel Image" class="w-full h-48 object-cover rounded-xl shadow-md">
+                                `).join('')}
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                ${hotel.images.slice(3, 6).map(imgSrc => `
+                                    <img src="${imgSrc}" alt="Hotel Image" class="w-full h-48 object-cover rounded-xl shadow-md">
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            showPage('hotel-details-page'); // Show hotel details page
+        }
+
+        // Function to create hotel cards
+        function renderHotels() {
+            hotelListContainer.innerHTML = '';
+            hotels.forEach(hotel => {
+                const hotelCard = document.createElement('a');
+                hotelCard.href = '#';
+                hotelCard.className = 'block overflow-hidden rounded-2xl bg-white shadow-lg transition-transform hover:scale-[1.02] hover:shadow-xl';
+                hotelCard.innerHTML = `
+                    <img src="${hotel.image}" alt="${hotel.name}" class="h-48 w-full object-cover">
+                    <div class="p-4 md:p-6">
+                        <div class="flex items-center justify-between">
+                            <div><h3 class="font-semibold text-gray-800">${hotel.name}</h3><p class="text-sm text-gray-500">${hotel.location}</p></div>
+                            <span class="font-bold text-gray-800">AED ${hotel.price}</span>
+                        </div>
+                    </div>
+                `;
+                hotelCard.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    showHotelDetails(hotel);
+                });
+                hotelListContainer.appendChild(hotelCard);
+            });
+        }
+        
+        // Function to render room cards
+        function renderRooms() {
+            roomListContainer.innerHTML = '';
+            rooms.forEach(room => {
+                const roomCard = document.createElement('div');
+                roomCard.className = 'overflow-hidden rounded-2xl bg-white shadow-lg';
+                roomCard.innerHTML = `
+                    <img src="${room.image}" alt="${room.name}" class="h-48 w-full object-cover">
+                    <div class="p-4">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <h3 class="font-semibold text-gray-800">${room.name}</h3>
+                                <div class="flex items-center mt-1 text-xs text-gray-500">
+                                    <span class="font-medium text-yellow-500 mr-1">&#9733; ${room.rating}</span>
+                                    <span class="mx-1">•</span>
+                                    <span>${room.beds}</span>
+                                    <span class="mx-1">•</span>
+                                    <span>${room.bath}</span>
+                                    <span class="mx-1">•</span>
+                                    <span>${room.sqft}</span>
+                                </div>
+                            </div>
+                            <span class="text-xl font-bold text-gray-800">AED ${room.price}</span>
+                        </div>
+                    </div>
+                `;
+                roomListContainer.appendChild(roomCard);
+            });
+        }
+        
+        // Function to render messages
+        function renderMessages() {
+            messageListContainer.innerHTML = '';
+            if (messages.length === 0) {
+                messageListContainer.innerHTML = '<p class="text-center text-gray-500">No messages yet.</p>';
+            } else {
+                messages.forEach(msg => {
+                    const messageCard = document.createElement('div');
+                    messageCard.className = 'bg-gray-100 rounded-lg p-6 shadow-sm';
+                    messageCard.innerHTML = `
+                        <p class="font-medium text-gray-800"><strong>Name:</strong> ${msg.fullname}</p>
+                        <p class="text-sm text-gray-600 mt-1"><strong>Email:</strong> ${msg.email}</p>
+                        <p class="text-sm text-gray-600 mt-1"><strong>Date:</strong> ${msg.timestamp}</p>
+                        <p class="mt-4 text-gray-700">${msg.message}</p>
+                    `;
+                    messageListContainer.prepend(messageCard);
+                });
+            }
+        }
+        
+        // Add event listener for form submission
+        searchForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const location = document.getElementById('location-input').value;
+            const checkin = document.getElementById('checkin-input').value;
+            const checkout = document.getElementById('checkout-input').value;
+            const guests = document.getElementById('guests-input').value;
+
+            const newSearch = { location, checkin, checkout, guests };
+            searchHistory.push(newSearch);
+            renderSearchHistory();
+            showSearchResults(newSearch);
+
+            // Clear input values after submission
+            document.getElementById('location-input').value = '';
+            document.getElementById('checkin-input').value = '';
+            document.getElementById('checkout-input').value = '';
+            document.getElementById('guests-input').value = '';
+            
+            showMessage('Your search is complete!');
+        });
+        
+        // Add event listener for contact form submission
+        contactForm.addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const fullname = document.getElementById('fullname').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            // Create a new message object with a timestamp
+            const newMessage = {
+                fullname,
+                email,
+                message,
+                timestamp: new Date().toLocaleString()
+            };
+            
+            // Add the new message to our local array
+            messages.push(newMessage);
+            
+            // In a real application, you would send this data to a server.
+            showMessage('Thank you for your message! We will get back to you soon.');
+            
+            // Clear the form
+            contactForm.reset();
+            
+            // Re-render messages to show the new one
+            renderMessages();
+        });
+
+        // Add event listeners for navigation links
+        homeLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            showPage('home-page');
+            showMessage('Navigating to Home page!');
+        });
+        
+        shopLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            showPage('shop-page');
+            renderRooms();
+        });
+        
+        contactLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            showPage('contact-page');
+        });
+        
+        viewMessagesLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            showPage('messages-page');
+            renderMessages(); // Make sure to render messages when the page is shown
+        });
+        
+        // Back to Home buttons
+        backFromSearchBtn.addEventListener('click', () => {
+            showPage('home-page');
+        });
+
+        backFromDetailsBtn.addEventListener('click', () => {
+            showPage('home-page');
+        });
+        
+        backFromShopBtn.addEventListener('click', () => {
+            showPage('home-page');
+        });
+        
+        backFromContactBtn.addEventListener('click', () => {
+            showPage('home-page');
+        });
+        
+        backFromMessagesBtn.addEventListener('click', () => {
+            showPage('home-page');
+        });
+        
+        // When the page first loads, render the hotels
+        document.addEventListener('DOMContentLoaded', renderHotels);
+    </script>
+
+</body>
+</html>
